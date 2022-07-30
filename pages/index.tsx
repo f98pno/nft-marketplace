@@ -8,7 +8,7 @@ import { NftMeta } from '@_types/nft'
 import { useWeb3 } from '@providers/web3'
 
 const Home: NextPage = () => {
-  const { ethereum, provider, isLoading, contract } = useWeb3();
+  const { ethereum, provider, isLoading, contract } = useWeb3()
   console.log(ethereum)
   console.log(provider)
 

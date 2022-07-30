@@ -18,7 +18,7 @@ const Web3Provider: FunctionComponent<Props> = ({children}) => {
 
             setWeb3Api({
                 ethereum: window.ethereum,
-                provider: null,
+                provider: provider,
                 contract: null,
                 isLoading: false
             })
