@@ -40,7 +40,10 @@ export const loadContract = async (
   const res = await fetch(`/contracts/${name}.json`);
   const Artifact = await res.json(); // the name does not matter here
 
+  // debugger
+
   console.log(Artifact)
+  console.log(NETWORK_ID)
 
 
   if (Artifact.networks[NETWORK_ID].address) {
