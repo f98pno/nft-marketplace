@@ -19,7 +19,6 @@ export default function Navbar() {
   const { data, isValidating, error } = useAccount("Some random params")
 
   console.log(data)
-  debugger
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
