@@ -1,10 +1,11 @@
 import { CryptoHookFactory } from "@_types/hooks";
-import { ethers } from "ethers";
 import { useEffect } from "react";
 import useSWR from "swr";
 
 type UseAccountResponse = {
     connect: () => void
+    isLoading: boolean
+    isInstalled: boolean
 }
 
 type AccountHookFactory = CryptoHookFactory<string, UseAccountResponse>
@@ -12,9 +13,9 @@ type AccountHookFactory = CryptoHookFactory<string, UseAccountResponse>
 export type UseAccountHook = ReturnType<AccountHookFactory>
 
 // deps -> provider, ethereum, contract (web3State)
-export const hookFactory: AccountHookFactory = ({provider, ethereum}) => () => {
+export const hookFactory: AccountHookFactory = ({provider, ethereum, isLoading}) => () => {
 
-    const swrRes = useSWR(
+    const { data, mutate, isValidating, ...swr } = useSWR(
         provider ? "web3/useAccountTest2" : null,
         async () => {
             console.log("REVALIDATING")
@@ -43,9 +44,9 @@ export const hookFactory: AccountHookFactory = ({provider, ethereum}) => () => {
         const accounts = args[0] as string[]
         if (accounts.length === 0) {
             console.error("Please, connect to Web3 wallet")
-        } else if (accounts[0] !== swrRes.data) {
-            alert("accounts has changed")
-            console.log(accounts[0])
+        } else if (accounts[0] !== data) {
+            //alert("accounts has changed")
+            mutate(accounts[0])
         }
     }
 
@@ -59,7 +60,12 @@ export const hookFactory: AccountHookFactory = ({provider, ethereum}) => () => {
     }
 
     return {
-        ...swrRes,
+        ...swr,
+        data,
+        isValidating,
+        isLoading: isLoading || isValidating,
+        isInstalled: ethereum?.isMetaMask || false,
+        mutate,
         connect    
     }
 }
