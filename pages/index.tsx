@@ -14,8 +14,8 @@ const Home: NextPage = () => {
   //console.log(contract)
 
   const getNftInfo = async () => {
-    console.log(await contract!.name())
-    console.log(await contract!.symbol())
+    //console.log(await contract!.name())
+    //console.log(await contract!.symbol())
   }
 
   if (contract) {
@@ -24,7 +24,7 @@ const Home: NextPage = () => {
 
   const getAccounts = async () => {
     const accounts = await provider!.listAccounts()
-    console.log(accounts[0])
+    //console.log(accounts[0])
   }
 
   if (provider) {

@@ -18,7 +18,7 @@ export const hookFactory: AccountHookFactory = ({provider, ethereum, isLoading})
     const { data, mutate, isValidating, ...swr } = useSWR(
         provider ? "web3/useAccountTest2" : null,
         async () => {
-            console.log("REVALIDATING")
+            //console.log("REVALIDATING")
             const accounts = await provider!.listAccounts()
             console.log(accounts)
             const account = accounts[0]
@@ -29,7 +29,8 @@ export const hookFactory: AccountHookFactory = ({provider, ethereum, isLoading})
 
             return account
         }, {
-            revalidateOnFocus: false
+            revalidateOnFocus: false,
+            shouldRetryOnError: false
         }
     )
 
@@ -63,7 +64,7 @@ export const hookFactory: AccountHookFactory = ({provider, ethereum, isLoading})
         ...swr,
         data,
         isValidating,
-        isLoading: isLoading || isValidating,
+        isLoading: isLoading as boolean,
         isInstalled: ethereum?.isMetaMask || false,
         mutate,
         connect    
